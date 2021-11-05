@@ -47,7 +47,7 @@
    //echo $specialDate['2011-11-11'];
 /*     $firstDay=date("Y-m-01");
     $month=date("m"); */
-    $firstDay=date("Y-m-01");
+    // $firstDay=date("Y-m-01");
 
     //直接訪問本頁不帶值
     //訪問本頁帶月份值
@@ -63,29 +63,30 @@
         $month=date("m");
         $year=date("Y");
     }
-        $lastmonth=$month-1;
-        $lastyear=$year;
+    
+    $lastmonth=$month-1;
+    $lastyear=$year;
+
+    $nextmonth=$month+1;
+    $nextyear=$year;
+    
+    if($month==1){
+        $lastmonth=12;
+        $lastyear=$year-1;
 
         $nextmonth=$month+1;
         $nextyear=$year;
 
-        if ($month==1){
-            $lastmonth=12;
-            $lastyear=$year-1;
+    }else if($month==12){
 
-            $nextmonth=$month+1;
-            $nextyear=$year;
+        $lastmonth=$month-1;
+        $lastyear=$year;
 
-        }elseif($month==12){
-            $lastmonth=$month-1;
-            $lastyear=$year;
+        $nextmonth=1;
+        $nextyear=$year+1;
+    }
 
-            $nextmonth=1;
-            $nextyear=$year+1;
-
-            }
-    
-    
+    $firstDay=date("$year-$month-01");
     $firstWeekWhiteDays=date("w",strtotime($firstDay));
     $monthDays=date("t",strtotime($firstDay));
     $firstWeekDays=7-$firstWeekWhiteDays;
@@ -117,7 +118,6 @@
 <div class="calendar">
     
 <?php
-$w=0;
 
 //月曆頭的地方
 foreach($headers as $header){
@@ -128,16 +128,14 @@ foreach($headers as $header){
 
 //月曆body的地方
 for($i=0;$i<$allCells;$i++){
+    $w=$i%7;
     if(is_numeric($td[$i])){
-        $date=date("Y-m-").$td[$i];
-        $w=date("w",strtotime($date));
+        $date=date("$year-$month-").$td[$i];
     }
-    
-    if($w==0 || $w==6){
 
+    if($w==0 || $w==6){
         echo "<div class='dayoff cell'>";
     }else{
-
         echo "<div class='cell'>";
     }
     echo $td[$i];
