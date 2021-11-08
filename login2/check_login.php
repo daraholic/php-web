@@ -1,13 +1,14 @@
 <?php
+session_start();
 // 使用者帳密:
 $acc='ann';
 $pw='123';
 // 判斷登入資訊是否正確
 if($acc==$_POST['acc'] && $pw==$_POST['pw']){
-    setcookie('user',$_POST['acc'],time()+3600);
+    $_SESSION['user']=$_POST['acc'];
+    // $_COOKIE['user'],$_POST['acc'],time()+3600);
     // 3600 = 1小時
     
-    // $_SESSION['user']=$_POST['acc'];
     
     // 登入成功就導去會員中心
     header("location:mem_center.php");

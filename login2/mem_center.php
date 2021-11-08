@@ -10,7 +10,15 @@
     <!-- 成功進到會員中心 -->
     歡迎
     <?php
-        echo $_COOKIE['user'];
+    session_start();
+        if(isset($_COOKIE['user'])){
+
+            echo $_COOKIE['user'];
+        }else{
+            echo $_SESSION['user'];
+        }
+        // 無論user是否同意使用COOKIE都可以記錄
+        // 直接用session
     ?>
     登入:
 </body>
